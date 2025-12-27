@@ -1,0 +1,52 @@
+Table users {
+  id integer [primary key]
+  full_name varchar(20)
+  username varchar(20)
+  email varchar(40)
+  password varchar(255)
+  creation_date varchar(10)
+}
+
+Table posts {
+  id integer [primary key]
+  creation_date varchar(10)
+  user_id integer
+}
+
+Table comments {
+  id integer [primary key]
+  comment varchar(400)
+  user_id integer
+  post_id integer
+}
+
+Table media {
+  id integer [primary key]
+  media_type varchar(50)
+  media_url varchar(200)
+  post_id integer
+}
+
+Table favorites {
+  id integer [primary key]
+  user_id integer
+  post_id integer
+}
+
+Table followers {
+  follower_id integer
+  following_id integer
+  indexes {
+    (follower_id, following_id) [unique]
+  }
+}
+
+/* Relationships */
+Ref: posts.user_id > users.id
+Ref: comments.user_id > users.id
+Ref: comments.post_id > posts.id
+Ref: media.post_id > posts.id
+Ref: favorites.user_id > users.id
+Ref: favorites.post_id > posts.id
+Ref: followers.follower_id > users.id
+Ref: followers.following_id > users.id
